@@ -1,5 +1,6 @@
 package com.example.benjamin.friendpaysplitter;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,4 +20,6 @@ public class CreateEventFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_create_event, container, false);
     }
+
+
 }
