@@ -47,8 +47,9 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/eventDate"
         android:layout_below="@id/eventName"
-        android:src="@drawable/ic_event_white_24dp"
+        android:src="@drawable/ic_event_white_36dp"
         android:onClick="showDatePickerDialog"
+        android:background="@android:color/transparent"
         />
 
     <TextView
