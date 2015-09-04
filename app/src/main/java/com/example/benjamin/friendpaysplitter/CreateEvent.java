@@ -2,10 +2,17 @@ package com.example.benjamin.friendpaysplitter;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+
+
+import android.app.Fragment;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+
 
 public class CreateEvent extends Activity {
 
@@ -13,6 +20,7 @@ public class CreateEvent extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+
     }
 
 
@@ -41,6 +49,23 @@ public class CreateEvent extends Activity {
     public void showDatePickerDialog(View view) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");
+
+    }
+
+    public void addParticipant(View view){
+        int participantCount = 0;
+        LinearLayout layout = (LinearLayout) findViewById(R.id.newEventForm);
+        for(int i = 0 ; i < layout.getChildCount() ; i++){
+            View v = layout.getChildAt(i);
+            if(v.getTag() == "participantField"){
+                participantCount++;
+            }
+        }
+        EditText participant = new EditText(this);
+            participant.setTag("participantField");
+            participant.setHint("Friend #"+(participantCount+1));
+
+        layout.addView(participant);
 
     }
 }

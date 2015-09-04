@@ -1,6 +1,5 @@
 package com.example.benjamin.friendpaysplitter;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -9,7 +8,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
@@ -31,4 +29,6 @@ public class DatePickerFragment extends DialogFragment
 
         eventDate.setText(year + "/" + month + "/" + day);
     }
+
+
 }

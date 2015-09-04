@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class CreateEventFragment extends Fragment {
+public class CreateEventFragment extends Fragment{
 
     public CreateEventFragment() {
     }
@@ -20,6 +21,8 @@ public class CreateEventFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_create_event, container, false);
     }
+
+
 
 
 }
