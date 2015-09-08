@@ -8,11 +8,16 @@
     <string name="event_date">Event/Activity Date</string>
     <string name="event_description">Event/Activity Description</string>
     <string name="add_participant">Add a Friend</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="create_event">Create Event</string>
+
+    <string name="title_activity_main">Event Cost Splitter</string>
 
     <string name="title_section1">Create Event</string>
     <string name="title_section2">View Events</string>
     <string name="title_section3">Quick Split</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 

@@ -26,8 +26,9 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         EditText eventDate = (EditText)getActivity().findViewById(R.id.eventDate);
-
         eventDate.setText(year + "/" + month + "/" + day);
+        eventDate.requestFocus();
+
     }
 
 
