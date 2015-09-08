@@ -10,9 +10,9 @@
     <string name="add_participant">Add a Friend</string>
     <string name="title_activity_main">MainActivity</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Create Event</string>
+    <string name="title_section2">View Events</string>
+    <string name="title_section3">Quick Split</string>
 
 
 
