@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -44,8 +45,6 @@ import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
 import com.couchbase.lite.android.AndroidContext;
-
-import org.w3c.dom.Text;
 
 
 public class MainActivity extends Activity implements ActionBar.TabListener, EventsFragment.OnFragmentInteractionListener, QuickSplit.OnFragmentInteractionListener {
@@ -109,8 +108,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Eve
 
         setupUI(findViewById(R.id.pager));
         helloCBL();
-        //createAllEventsView();
-
+        createAllEventsView();
     }
 
 
@@ -123,6 +121,20 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Eve
         }
     }
 
+    public void displayEvents(View view){
+        List<Map<String,Object>> allEvents = getAllEvents();
+        LinearLayout eventsContainer = (LinearLayout)findViewById(R.id.allEvents);
+        if(eventsContainer != null) {
+            for (int i = 0; i < allEvents.size(); i++) {
+                TextView t = new TextView(this);
+                if (allEvents.get(i) != null) {
+                    t.setText(allEvents.get(i).get("name").toString());
+                    eventsContainer.addView(t);
+                }
+
+            }
+        }
+    }
 
     public String createDocument(Map<String, Object> map) {
         // Create a new document and add data
@@ -135,6 +147,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Eve
         } catch (CouchbaseLiteException e) {
             Log.e(TAG, "Error putting", e);
         }
+        Log.i("New Doc. Created",documentId);
         return documentId;
     }
 
@@ -149,11 +162,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Eve
         DateFormat df = DateFormat.getDateInstance();
 
         String eventName = eventNameField.getText().toString();
-        Date eventdate;
+        Date eventDate;
             try{
-                eventdate = df.parse(eventDateField.getText().toString());
+                eventDate = df.parse(eventDateField.getText().toString());
             } catch(ParseException p){
-                eventdate = new Date();
+                eventDate = new Date();
             }
         String eventDescription = eventDescriptionField.getText().toString();
 
@@ -166,43 +179,37 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Eve
             }
         }
 
-        event.put("docType","event");
+        event.put("type","event");
         event.put("name",eventName);
         event.put("description",eventDescription);
-        event.put("date",eventdate);
+        event.put("date",eventDate);
         event.put("participants", participants);
 
         createDocument(event);
-
-        List<Map<String,Object>> allEvents = getAllEvents();
-        LinearLayout eventsContainer = (LinearLayout)findViewById(R.id.allEvents);
-
-        for(Map<String,Object> m : allEvents){
-            TextView t = new TextView(this);
-            t.setText((String)m.get("name"));
-            eventsContainer.addView(t);
-        }
-
     }
 
     public List<Map<String,Object>> getAllEvents(){
         List<Map<String,Object>> allEvents = new ArrayList<Map<String, Object>>();
-        Query query = database.createAllDocumentsQuery();
+        Query query = database.getView("allEvents").createQuery();
         try {
             QueryEnumerator results = query.run();
        /* Iterate through the rows to get the document ids */
             for (Iterator<QueryRow> it = results; it.hasNext();) {
                 QueryRow row = it.next();
-                String docId = row.getValue().toString();
-                Log.i("DOC_ID",docId);
-                Document retrievedDocument = database.getDocument(docId);
-                allEvents.add(retrievedDocument.getProperties());
+                //String docId = row.getDocumentId();
+               //Log.i("DOC_ID", docId);
+                //Document retrievedDocument = database.getDocument(docId);
+                System.out.println("******DOCUMENT VALUE:" + row.getValue());
+                //System.out.println("******DOCUMENT PROP.:" + row.getDocument().getProperties());
+                if(row.getValue() != null) {
+                    allEvents.add((Map<String,Object>)row.getValue());
+                }
 
             }
         } catch (CouchbaseLiteException e) {
             Log.e("Error querying view.", e.toString());
         }
-
+        //Log.i("EVENT_LIST_SIZE",String.valueOf(allEvents.size()));
         return allEvents;
     }
 
@@ -225,12 +232,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Eve
             allEventsView.setMap(new Mapper(){
                         @Override
                         public void map(Map<String, Object> document, Emitter emitter) {
-                            List<String> events = (List) document.get("docType");
-                            for (String event : events) {
-                                emitter.emit(event, document.get("name"));
-                            }
+                            if(document.get("type").equals("event"))
+                                emitter.emit(document.get("_id"), document);
+
                         }
-                    }, "1" /* The version number of the mapper... */
+                    }, "3" /* The version number of the mapper... */
             );
     }
 

@@ -94,6 +94,12 @@
             android:layout_height="wrap_content"
             android:text="@string/create_event"
             android:onClick="createEvent"/>
+        <Button
+            android:id="@+id/showEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show Events"
+            android:onClick="displayEvents"/>
         <LinearLayout
             android:id="@+id/allEvents"
             android:layout_width="match_parent"
