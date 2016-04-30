@@ -1,4 +1,4 @@
-package com.example.benjamin.friendpaysplitter;
+package com.ben_nguyen.friendpaysplitter;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
